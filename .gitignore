@@ -1,0 +1,11 @@
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+atlassian-ide-plugin.xml
+persistence.xml
+.DS_Store
+log/
+target/
