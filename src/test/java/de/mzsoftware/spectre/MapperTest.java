@@ -38,10 +38,10 @@ public class MapperTest {
     @Test
     public void testAnnotationDetection() {
         String testvalue = "this is a Test";
-        Mapper mapper = new Mapper();
-        MTBeanAWithInterface MTBeanAWithInterface = new MTBeanAWithInterface();
-        MTBeanAWithInterface.setTestString(testvalue);
-        MTInterface result = mapper.map(MTBeanAWithInterface);
+        MTBeanAWithInterface source = new MTBeanAWithInterface();
+        Mapper mapper = MapperFactory.getMapper(source);
+        source.setTestString(testvalue);
+        MTInterface result = mapper.map(source);
         logger.debug(result.getTestString());
         assertEquals(testvalue, result.getTestString());
     }
@@ -49,10 +49,10 @@ public class MapperTest {
     @Test
     public void testSimpleMappingWithoutImplementationClass(){
         String testvalue = "this is a Test";
-        Mapper mapper = new Mapper();
-        MTBeanAWithoutInterface MTBeanAWithoutInterface = new MTBeanAWithoutInterface();
-        MTBeanAWithoutInterface.setTestString(testvalue);
-        MTBeanBWithoutInterface result = mapper.map(MTBeanAWithoutInterface);
+        MTBeanAWithoutInterface source = new MTBeanAWithoutInterface();
+        Mapper mapper = MapperFactory.getMapper(source);
+        source.setTestString(testvalue);
+        MTBeanBWithoutInterface result = mapper.map(source);
         logger.debug(result.getTestString());
         assertEquals(testvalue, result.getTestString());
     }
@@ -61,11 +61,11 @@ public class MapperTest {
     public void testSimpleMappingForClassesExtendingABaseClass(){
         String testvalue = "this is a Test";
         String baseBeanTestValue = "this is another Test";
-        Mapper mapper = new Mapper();
-        MTBeanAExtending mtBeanAExtending = new MTBeanAExtending();
-        mtBeanAExtending.setTestString(testvalue);
-        mtBeanAExtending.setBaseBeanTestField(baseBeanTestValue);
-        MTBeanBExtending result = mapper.map(mtBeanAExtending);
+        MTBeanAExtending source = new MTBeanAExtending();
+        Mapper mapper = MapperFactory.getMapper(source);
+        source.setTestString(testvalue);
+        source.setBaseBeanTestField(baseBeanTestValue);
+        MTBeanBExtending result = mapper.map(source);
         logger.debug(result.getTestString());
         logger.debug(result.getBaseBeanTestField());
         assertEquals(testvalue, result.getTestString());
@@ -76,11 +76,11 @@ public class MapperTest {
     public void testSimpleMappingForClassesExtendingABaseClassWithInterface(){
         String testvalue = "this is a Test";
         String baseBeanTestValue = "this is another Test";
-        Mapper mapper = new Mapper();
-        MTBeanAExtendingWithInterface mtBeanAExtendingWithInterface = new MTBeanAExtendingWithInterface();
-        mtBeanAExtendingWithInterface.setTestString(testvalue);
-        mtBeanAExtendingWithInterface.setBaseBeanTestField(baseBeanTestValue);
-        MTInterface result = mapper.map(mtBeanAExtendingWithInterface);
+        MTBeanAExtendingWithInterface source = new MTBeanAExtendingWithInterface();
+        Mapper mapper = MapperFactory.getMapper(source);
+        source.setTestString(testvalue);
+        source.setBaseBeanTestField(baseBeanTestValue);
+        MTInterface result = mapper.map(source);
         logger.debug(result.getTestString());
         //logger.debug(result.getBaseBeanTestField());
         assertEquals(testvalue, result.getTestString());
@@ -90,10 +90,10 @@ public class MapperTest {
     @Test
     public void testMappingUsingProxyClass(){
         String testvalue = "this is a Test";
-        Mapper mapper = new Mapper();
-        MTBeanImplementingTargetInterface mtBeanImplementingTargetInterface = new MTBeanImplementingTargetInterface();
-        mtBeanImplementingTargetInterface.setTestString(testvalue);
-        MTTargetInterface result = mapper.map(mtBeanImplementingTargetInterface);
+        MTBeanImplementingTargetInterface source = new MTBeanImplementingTargetInterface();
+        Mapper mapper = MapperFactory.getMapper(source);
+        source.setTestString(testvalue);
+        MTTargetInterface result = mapper.map(source);
         logger.debug(result.getTestString());
         assertEquals(testvalue, result.getTestString());
     }
