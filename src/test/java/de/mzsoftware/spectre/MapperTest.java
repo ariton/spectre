@@ -86,4 +86,15 @@ public class MapperTest {
         assertEquals(testvalue, result.getTestString());
         //assertEquals(baseBeanTestValue, result.getBaseBeanTestField());
     }
+
+    @Test
+    public void testMappingUsingProxyClass(){
+        String testvalue = "this is a Test";
+        Mapper mapper = new Mapper();
+        MTBeanImplementingTargetInterface mtBeanImplementingTargetInterface = new MTBeanImplementingTargetInterface();
+        mtBeanImplementingTargetInterface.setTestString(testvalue);
+        MTTargetInterface result = mapper.map(mtBeanImplementingTargetInterface);
+        logger.debug(result.getTestString());
+        assertEquals(testvalue, result.getTestString());
+    }
 }
