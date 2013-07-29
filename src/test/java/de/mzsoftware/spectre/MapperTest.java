@@ -97,4 +97,6 @@ public class MapperTest {
         logger.debug(result.getTestString());
         assertEquals(testvalue, result.getTestString());
     }
+
+    //TODO: write more tests
 }
