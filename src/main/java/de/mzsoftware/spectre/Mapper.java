@@ -2,6 +2,7 @@ package de.mzsoftware.spectre;
 
 /**
  * Interface for Mappers to be Used
+ *
  * Created with IntelliJ IDEA.
  * User: ariton
  * Date: 26.07.13
