@@ -41,7 +41,7 @@ public class GenericProxyInvocationHandler implements InvocationHandler{
 
     private<T>  T invokeGetter(String memberName){
         MappingContainer mappingContainer = mappedData.get(memberName);
-        //TODO: checken sieht falsch aus
+        //TODO: check if generics used the right way , (looks creepy)
         T type = (T)mappingContainer.getType();
         return (T) mappingContainer.getValue();
     }
