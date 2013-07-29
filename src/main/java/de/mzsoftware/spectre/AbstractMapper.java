@@ -16,9 +16,6 @@ import java.util.List;
  * Time: 12:26
  */
 public abstract class AbstractMapper<I, T> implements Mapper{
-    public static final String SETTER_PREFIX = "set";
-    public static final String GETTER_PREFIX = "get";
-    public static final String BOOLEAN_GETTER_PREFIX = "is";
     private Logger log = LoggerFactory.getLogger(AbstractMapper.class);
 
     protected I targetInterface;
@@ -36,15 +33,15 @@ public abstract class AbstractMapper<I, T> implements Mapper{
             log.debug("getter returns \"{}\" of Type \"{}\"", retVal, returnType);
 
             String strippedMethodName = null;
-            if (method.getName().startsWith(GETTER_PREFIX)) {
-                strippedMethodName = method.getName().substring(GETTER_PREFIX.length());
+            if (method.getName().startsWith(Constants.GETTER_PREFIX)) {
+                strippedMethodName = method.getName().substring(Constants.GETTER_PREFIX.length());
                 log.debug("StrippedMethodName: {} ", strippedMethodName);
-            } else if (method.getName().startsWith(BOOLEAN_GETTER_PREFIX)) {
-                strippedMethodName = method.getName().substring(BOOLEAN_GETTER_PREFIX.length());
+            } else if (method.getName().startsWith(Constants.BOOLEAN_GETTER_PREFIX)) {
+                strippedMethodName = method.getName().substring(Constants.BOOLEAN_GETTER_PREFIX.length());
                 log.debug("StrippedMethodName: {} ", strippedMethodName);
             }
 
-            Method targetSetter = targetSetterMethods.get(SETTER_PREFIX + strippedMethodName);
+            Method targetSetter = targetSetterMethods.get(Constants.SETTER_PREFIX + strippedMethodName);
             log.debug("targetSetter: {}", targetSetter);
             targetSetter.invoke(targetImplementation, retVal);
         }
@@ -63,7 +60,7 @@ public abstract class AbstractMapper<I, T> implements Mapper{
         }
 
         for (Method method : source.getClass().getDeclaredMethods()) {
-            if (method.getName().startsWith(GETTER_PREFIX) || method.getName().startsWith(BOOLEAN_GETTER_PREFIX)) {
+            if (method.getName().startsWith(Constants.GETTER_PREFIX) || method.getName().startsWith(Constants.BOOLEAN_GETTER_PREFIX)) {
                 sourceGetterMethods.add(method);
                 log.debug("Adding Method {} to Source-Getters", method);
             } else {

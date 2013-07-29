@@ -56,10 +56,10 @@ public class ProxyMapper extends AbstractMapper {
             log.debug("Target is ProxyClass? {}", Proxy.isProxyClass(target.getClass()));
             log.debug("Target {}", target.getClass());
             log.debug("Interface {}",target.getClass().getInterfaces()[0]);
-            log.debug("Methods {}",target.getClass().getInterfaces()[0].getDeclaredMethods());
+        log.debug("Methods {}", new Object[]{target.getClass().getInterfaces()[0].getDeclaredMethods()});
 
             for (Method method : target.getClass().getInterfaces()[0].getDeclaredMethods()) {
-                if (method.getName().startsWith(SETTER_PREFIX)) {
+                if (method.getName().startsWith(Constants.SETTER_PREFIX)) {
                     targetSetterMethods.put(method.getName(), method);
                     log.debug("Adding Method {} to Target-Setters", method);
                 }

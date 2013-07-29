@@ -76,7 +76,7 @@ public class AnnotationMapper extends AbstractMapper{
         }
 
         for (Method method : target.getClass().getDeclaredMethods()) {
-            if (method.getName().startsWith(SETTER_PREFIX)) {
+            if (method.getName().startsWith(Constants.SETTER_PREFIX)) {
                 targetSetterMethods.put(method.getName(), method);
                 log.debug("Adding Method {} to Target-Setters", method);
             }
