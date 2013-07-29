@@ -1,5 +1,8 @@
 package de.mzsoftware.spectre;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -9,17 +12,22 @@ import java.lang.reflect.Method;
  * Date: 25.07.13
  * Time: 03:09
  */
-public class GenericProxyInvocationHandler<T> implements InvocationHandler{
+public class GenericProxyInvocationHandler implements InvocationHandler{
 
-    private T type;
+    private Logger log = LoggerFactory.getLogger(GenericProxyInvocationHandler.class);
 
-    public GenericProxyInvocationHandler(T type){
-        this.type = type;
+    private Object object;
+
+    public GenericProxyInvocationHandler(Object object){
+        this.object = object;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return method.invoke(type, args);
+        log.debug("Method {}", method.getName());
+        log.debug("Proxy {}", proxy.getClass().getName());
+        log.debug("Object {}", object.getClass().getName());
+        return method.invoke(object, args);
     }
 
 }
