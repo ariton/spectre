@@ -4,6 +4,8 @@ import de.mzsoftware.spectre.annotations.TargetInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Proxy;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ariton
@@ -15,17 +17,22 @@ public class MapperFactory {
     private static Logger log = LoggerFactory.getLogger(MapperFactory.class);
 
     public static <S, I> Mapper getMapper(S source){
-
+        log.debug("source Instance of Proxy? {}", source instanceof Proxy);
+        if(source instanceof Proxy){
+            log.info("Proxy instance found, returning AnnotationMapper");
+            return new AnnotationMapper();
+        }
         if(isProxyUsed(source)){
 
             return new ProxyMapper();
+
         }
         log.info("No @TargetInterface annotation found, looking for @MapClass ...");
         return new AnnotationMapper();
     }
 
 
-    protected static <S> boolean isProxyUsed(S source){
+    private static <S> boolean isProxyUsed(S source){
         Class[] interfaces = source.getClass().getInterfaces();
         for (Class iface : interfaces) {
             log.debug("Detecting @TargetInterface annotation for proxy generation...");

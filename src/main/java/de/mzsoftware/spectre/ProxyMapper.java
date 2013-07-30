@@ -27,7 +27,6 @@ public class ProxyMapper extends AbstractMapper {
 
         ClassLoader proxyClassLoader = ((Class<I>) targetInterface).getClassLoader();
         targetImplementation = (T) GenericProxyFactory.getProxy((Class<I>) targetInterface, proxyClassLoader);
-        log.debug("Proxy Instance {} created.", targetImplementation);
 
         try {
             loadSourceGetterMethods(source);

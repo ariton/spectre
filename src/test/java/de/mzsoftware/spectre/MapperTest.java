@@ -98,5 +98,23 @@ public class MapperTest {
         assertEquals(testvalue, result.getTestString());
     }
 
+    @Test
+    public void testMappingFromProxyToRealImplementation() {
+        String testvalue = "this is a Test";
+        MTBeanImplementingTargetInterface source = new MTBeanImplementingTargetInterface();
+        Mapper mapper = MapperFactory.getMapper(source);
+        source.setTestString(testvalue);
+        MTTargetInterface result = mapper.map(source);
+        logger.debug(result.getTestString());
+        assertEquals(testvalue, result.getTestString());
+        //and the way back
+        Mapper mapper1 = MapperFactory.getMapper(result);
+        MTTargetInterface newResult = mapper1.map(result);
+        logger.debug(newResult.getTestString());
+        assertEquals(testvalue, newResult.getTestString());
+        assertEquals(source.getClass(), newResult.getClass());
+
+    }
+
     //TODO: write more tests
 }

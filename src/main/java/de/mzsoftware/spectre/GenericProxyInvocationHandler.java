@@ -24,7 +24,6 @@ public class GenericProxyInvocationHandler implements InvocationHandler{
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         log.debug("Method {}", method.getName());
-        log.debug("Proxy {}", proxy.getClass().getName());
         String memberName = "";
         if(method.getName().startsWith(Constants.GETTER_PREFIX)){
             memberName = method.getName().substring(Constants.GETTER_PREFIX.length());

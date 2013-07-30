@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,14 +50,21 @@ public abstract class AbstractMapper<I, T> implements Mapper{
 
     protected  <S, T> void loadSourceGetterMethods(S source) throws IllegalAccessException, InstantiationException {
         log.debug("Loading Source - getters");
-        T superclass = (T) source.getClass().getSuperclass().newInstance();
-        log.debug("Superclass {} of {} detected.", superclass, source.getClass());
+        log.debug("isInterface {}", source.getClass().isInterface());
+        log.debug("isProxy {}", Proxy.isProxyClass(source.getClass()));
+        log.debug("isInstanceOfProxy {}", source instanceof Proxy);
+        if(! (source instanceof Proxy)){
 
-        if (superclass.getClass().getName().equals("java.lang.Object")) {
-            log.debug("Superclass of Type {} detected - skipping...", superclass.getClass().getName());
-        } else {
-            log.debug("Superclass of Type {} detected, scanning...", superclass.getClass());
-            loadSourceGetterMethods(superclass);
+            T superclass = (T) source.getClass().getSuperclass().newInstance();
+            log.debug("Superclass {} of {} detected.", superclass, source.getClass());
+
+            if (superclass.getClass().getName().equals("java.lang.Object")) {
+                log.debug("Superclass of Type {} detected - skipping...", superclass.getClass().getName());
+            } else {
+                log.debug("Superclass of Type {} detected, scanning...", superclass.getClass());
+                loadSourceGetterMethods(superclass);
+            }
+
         }
 
         for (Method method : source.getClass().getDeclaredMethods()) {

@@ -16,13 +16,13 @@ import java.lang.reflect.Method;
  */
 public class AnnotationMapper extends AbstractMapper{
 
-    private Logger log = LoggerFactory.getLogger(MapperFactory.class);
+    private Logger log = LoggerFactory.getLogger(AnnotationMapper.class);
 
 
     @Override
     public <S, T, I> I map(S source) {
 
-        Annotation annotation = source.getClass().getAnnotation(MapClass.class);
+        Annotation annotation = findMapClassAnnotation(source);
         log.debug("Annotation {}", annotation);
         try {
             if (null != annotation) {
@@ -82,5 +82,32 @@ public class AnnotationMapper extends AbstractMapper{
             }
         }
 
+    }
+
+    private Annotation findMapClassAnnotation(Object source){
+         if(source.getClass().isAnnotationPresent(MapClass.class)){
+             return source.getClass().getAnnotation(MapClass.class);
+         }
+        Annotation annotation = findMapClassOnSuperclass(source.getClass().getSuperclass());
+        if (null == annotation){
+            for(Class<?> clazz : source.getClass().getInterfaces()){
+                if (clazz.isAnnotationPresent(MapClass.class)){
+                    return clazz.getAnnotation(MapClass.class);
+                }
+            }
+            log.error("@MapClass annotation not found!");
+            return null;
+        }
+        return annotation;
+    }
+
+    private Annotation findMapClassOnSuperclass(Class<?> clazz){
+        if(null==clazz) {
+            return null;
+        }
+        if(clazz.isAnnotationPresent(MapClass.class)){
+            return clazz.getAnnotation(MapClass.class);
+        }
+        return findMapClassOnSuperclass(clazz.getSuperclass());
     }
 }
