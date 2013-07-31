@@ -16,18 +16,18 @@ import java.util.List;
  * Date: 24.07.13
  * Time: 12:26
  */
-public abstract class AbstractMapper<I, T> implements Mapper{
-    private Logger log = LoggerFactory.getLogger(AbstractMapper.class);
+abstract class AbstractMapper<I, T> implements Mapper{
+    private final Logger log = LoggerFactory.getLogger(AbstractMapper.class);
 
-    protected I targetInterface;
-    protected T targetImplementation;
+    I targetInterface;
+    T targetImplementation;
 
-    protected List<Method> sourceGetterMethods = new ArrayList<Method>();
-    protected HashMap<String, Method> targetSetterMethods = new HashMap<String, Method>();
+    private final List<Method> sourceGetterMethods = new ArrayList<Method>();
+    final HashMap<String, Method> targetSetterMethods = new HashMap<String, Method>();
 
 
 
-    protected <S, T> void doMapping(S source, T targetImplementation) throws IllegalAccessException, InvocationTargetException {
+    <S, T> void doMapping(S source, T targetImplementation) throws IllegalAccessException, InvocationTargetException {
         for (Method method : sourceGetterMethods) {
             Object retVal = method.invoke(source);
             Class returnType = method.getReturnType();
@@ -48,7 +48,7 @@ public abstract class AbstractMapper<I, T> implements Mapper{
         }
     }
 
-    protected  <S, T> void loadSourceGetterMethods(S source) throws IllegalAccessException, InstantiationException {
+    <S, T> void loadSourceGetterMethods(S source) throws IllegalAccessException, InstantiationException {
         log.debug("Loading Source - getters");
         log.debug("isInterface {}", source.getClass().isInterface());
         log.debug("isProxy {}", Proxy.isProxyClass(source.getClass()));

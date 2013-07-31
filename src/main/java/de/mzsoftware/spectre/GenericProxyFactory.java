@@ -10,7 +10,7 @@ import java.lang.reflect.Proxy;
  *
  * found at: http://www.ibm.com/developerworks/java/library/j-jtp08305/index.html
  */
-public class GenericProxyFactory {
+class GenericProxyFactory {
 
     public static <T> T getProxy(Class<T> iface, final ClassLoader classLoader ) {
         return (T) Proxy.newProxyInstance(classLoader, new Class[]{iface}, new GenericProxyInvocationHandler());

@@ -1,6 +1,5 @@
 package de.mzsoftware.spectre;
 
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.MethodRule;
@@ -27,13 +26,7 @@ public class MapperTest {
         }
     };
 
-    final Logger logger =  LoggerFactory.getLogger(MapperTest.class);
-
-    @BeforeClass
-    public static void setup() {
-//        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-//        StatusPrinter.print(lc);
-    }
+    private final Logger logger =  LoggerFactory.getLogger(MapperTest.class);
 
     @Test
     public void testAnnotationDetection() {

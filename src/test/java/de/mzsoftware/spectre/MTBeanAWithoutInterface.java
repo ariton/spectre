@@ -9,7 +9,7 @@ import de.mzsoftware.spectre.annotations.MapClass;
  * Time: 18:12
  */
 @MapClass(MTBeanBWithoutInterface.class)
-public class MTBeanAWithoutInterface {
+class MTBeanAWithoutInterface {
 
     private String testString;
 

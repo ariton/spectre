@@ -6,7 +6,7 @@ package de.mzsoftware.spectre;
  * Date: 24.07.13
  * Time: 19:06
  */
-public class MTBaseBean {
+class MTBaseBean {
 
     private String baseBeanTestField;
 

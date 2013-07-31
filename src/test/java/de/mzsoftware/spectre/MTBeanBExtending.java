@@ -9,7 +9,7 @@ import de.mzsoftware.spectre.annotations.MapClass;
  * Time: 19:11
  */
 @MapClass(MTBeanAExtending.class)
-public class MTBeanBExtending extends MTBaseBean {
+class MTBeanBExtending extends MTBaseBean {
     private String testString;
 
     public String getTestString() {

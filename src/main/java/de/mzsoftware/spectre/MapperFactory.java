@@ -12,9 +12,9 @@ import java.lang.reflect.Proxy;
  * Date: 26.07.13
  * Time: 15:00
  */
-public class MapperFactory {
+class MapperFactory {
 
-    private static Logger log = LoggerFactory.getLogger(MapperFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(MapperFactory.class);
 
     public static <S, I> Mapper getMapper(S source){
         log.debug("source Instance of Proxy? {}", source instanceof Proxy);

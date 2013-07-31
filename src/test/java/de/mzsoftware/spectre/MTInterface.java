@@ -6,7 +6,7 @@ package de.mzsoftware.spectre;
  * Date: 24.07.13
  * Time: 17:59
  */
-public interface MTInterface {
+interface MTInterface {
 
     String getTestString();
 

@@ -8,7 +8,7 @@ package de.mzsoftware.spectre;
  */
 public class MTBeanImplementingTargetInterface implements MTTargetInterface {
 
-    protected String testString;
+    private String testString;
 
     @Override
     public String getTestString() {

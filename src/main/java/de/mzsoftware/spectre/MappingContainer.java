@@ -6,7 +6,7 @@ package de.mzsoftware.spectre;
  * Date: 29.07.13
  * Time: 14:52
  */
-public class MappingContainer {
+class MappingContainer {
 
     private Class type;
     private Object value;

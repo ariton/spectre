@@ -16,7 +16,7 @@ import java.lang.reflect.Proxy;
  */
 public class ProxyMapper extends AbstractMapper {
 
-    private Logger log = LoggerFactory.getLogger(ProxyMapper.class);
+    private final Logger log = LoggerFactory.getLogger(ProxyMapper.class);
 
 
     @Override
@@ -51,7 +51,7 @@ public class ProxyMapper extends AbstractMapper {
         }
     }
 
-    protected void loadTargetSetterMethods(Object target) throws IllegalAccessException, InstantiationException {
+    void loadTargetSetterMethods(Object target) {
             log.debug("Target is ProxyClass? {}", Proxy.isProxyClass(target.getClass()));
             log.debug("Target {}", target.getClass());
             log.debug("Interface {}",target.getClass().getInterfaces()[0]);

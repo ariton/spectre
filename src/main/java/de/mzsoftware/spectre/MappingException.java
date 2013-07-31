@@ -6,7 +6,7 @@ package de.mzsoftware.spectre;
  * Date: 24.07.13
  * Time: 17:17
  */
-public class MappingException extends RuntimeException {
+class MappingException extends RuntimeException {
 
     public MappingException(Throwable t){
         super(t);

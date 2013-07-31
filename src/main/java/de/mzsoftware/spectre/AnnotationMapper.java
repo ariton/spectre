@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  */
 public class AnnotationMapper extends AbstractMapper{
 
-    private Logger log = LoggerFactory.getLogger(AnnotationMapper.class);
+    private final Logger log = LoggerFactory.getLogger(AnnotationMapper.class);
 
 
     @Override
@@ -63,7 +63,7 @@ public class AnnotationMapper extends AbstractMapper{
 
 
 
-    protected <S, T> void loadTargetSetterMethods(T target) throws IllegalAccessException, InstantiationException {
+    <S, T> void loadTargetSetterMethods(T target) throws IllegalAccessException, InstantiationException {
         log.debug("Not ProxyMode, detecting superclass...");
         S superclass = (S) target.getClass().getSuperclass().newInstance();
         log.debug("Superclass {} of {} detected.", superclass, target.getClass());

@@ -14,17 +14,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * Date: 25.07.13
  * Time: 03:09
  */
-public class GenericProxyInvocationHandler implements InvocationHandler{
+class GenericProxyInvocationHandler implements InvocationHandler{
 
-    private Logger log = LoggerFactory.getLogger(GenericProxyInvocationHandler.class);
+    private final Logger log = LoggerFactory.getLogger(GenericProxyInvocationHandler.class);
 
-    private Map<String, MappingContainer> mappedData = new ConcurrentHashMap<String, MappingContainer>();
+    private final Map<String, MappingContainer> mappedData = new ConcurrentHashMap<String, MappingContainer>();
 
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         log.debug("Method {}", method.getName());
-        String memberName = "";
+        String memberName;
         if(method.getName().startsWith(Constants.GETTER_PREFIX)){
             memberName = method.getName().substring(Constants.GETTER_PREFIX.length());
             return invokeGetter(memberName);
