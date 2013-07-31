@@ -13,7 +13,6 @@ import java.lang.reflect.Proxy;
 public class GenericProxyFactory {
 
     public static <T> T getProxy(Class<T> iface, final ClassLoader classLoader ) {
-        return (T)
-                Proxy.newProxyInstance(classLoader, new Class[]{iface}, new GenericProxyInvocationHandler());
+        return (T) Proxy.newProxyInstance(classLoader, new Class[]{iface}, new GenericProxyInvocationHandler());
     }
 }
