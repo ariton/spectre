@@ -20,7 +20,7 @@ public class AnnotationMapper extends AbstractMapper{
 
 
     @Override
-    public <S, T, I> I map(S source) {
+    public <S, I> I map(S source) {
 
         Annotation annotation = findMapClassAnnotation(source);
         log.debug("Annotation {}", annotation);
@@ -31,16 +31,16 @@ public class AnnotationMapper extends AbstractMapper{
                     Object implementationClass = mapClass.implementationClass().newInstance();
                     if (!(implementationClass instanceof NullMarker)) {
 
-                        targetImplementation = (T) mapClass.implementationClass().newInstance();
-                        targetInterface = (I) mapClass.value();
+                        targetImplementation =  mapClass.implementationClass().newInstance();
+                        targetInterface = mapClass.value();
                         log.debug("ImplementationClass given, returning \"{}\" as Type and using \"{}\" as implementation.",
                                 targetInterface,
                                 targetImplementation.getClass().getName());
 
                     } else {
 
-                        targetImplementation = (T) mapClass.value().newInstance();
-                        targetInterface = (I) targetImplementation;
+                        targetImplementation = mapClass.value().newInstance();
+                        targetInterface = targetImplementation;
                         log.debug("No ImplementationClass given, returning \"{}\" as Type.", targetInterface.getClass().getName());
 
                     }

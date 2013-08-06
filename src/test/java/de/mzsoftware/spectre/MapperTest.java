@@ -75,9 +75,7 @@ public class MapperTest {
         source.setBaseBeanTestField(baseBeanTestValue);
         MTInterface result = mapper.map(source);
         logger.debug(result.getTestString());
-        //logger.debug(result.getBaseBeanTestField());
         assertEquals(testvalue, result.getTestString());
-        //assertEquals(baseBeanTestValue, result.getBaseBeanTestField());
     }
 
     @Test
@@ -106,7 +104,6 @@ public class MapperTest {
         logger.debug(newResult.getTestString());
         assertEquals(testvalue, newResult.getTestString());
         assertEquals(source.getClass(), newResult.getClass());
-
     }
 
     //TODO: write more tests

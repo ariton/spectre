@@ -16,23 +16,33 @@ class MapperFactory {
 
     private static final Logger log = LoggerFactory.getLogger(MapperFactory.class);
 
-    public static <S, I> Mapper getMapper(S source){
+    /**
+     *
+     * @param source
+     * @param <S>
+     * @return
+     */
+    public static <S> Mapper getMapper(S source){
         log.debug("source Instance of Proxy? {}", source instanceof Proxy);
         if(source instanceof Proxy){
             log.info("Proxy instance found, returning AnnotationMapper");
             return new AnnotationMapper();
         }
-        if(isProxyUsed(source)){
+        if(mustReturnProxyInstance(source)){
 
             return new ProxyMapper();
 
         }
-        log.info("No @TargetInterface annotation found, looking for @MapClass ...");
-        return new AnnotationMapper();
+        if(isAnnotationBased(source)){
+            log.info("AnnotationBased Mapper required.");
+            return new AnnotationMapper();
+        }
+        log.info("No Marker Annotations Found, don't know what to do!");
+        throw new MappingException();
     }
 
 
-    private static <S> boolean isProxyUsed(S source){
+    private static <S> boolean mustReturnProxyInstance(S source){
         Class[] interfaces = source.getClass().getInterfaces();
         for (Class iface : interfaces) {
             log.debug("Detecting @TargetInterface annotation for proxy generation...");
@@ -42,6 +52,11 @@ class MapperFactory {
             }
         }
         return false;
+    }
+
+    private static <S> boolean isAnnotationBased(S source){
+
+        return true;
     }
 
 

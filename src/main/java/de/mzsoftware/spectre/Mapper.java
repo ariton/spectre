@@ -10,6 +10,6 @@ package de.mzsoftware.spectre;
  */
 public interface Mapper {
 
-    public <S, T, I> I map(S source);
+    public <S, I> I map(S source);
 
 }

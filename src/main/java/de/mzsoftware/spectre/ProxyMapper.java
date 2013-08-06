@@ -20,13 +20,13 @@ public class ProxyMapper extends AbstractMapper {
 
 
     @Override
-    public <S, T, I> I map(S source) {
+    public <S, I> I map(S source) {
         findTargetInterface(source);
         log.debug("TargetInterface: {}", targetInterface);
         log.debug("Interfaces to construct the Proxy: {}",targetInterface.getClass());
 
         ClassLoader proxyClassLoader = ((Class<I>) targetInterface).getClassLoader();
-        targetImplementation = (T) GenericProxyFactory.getProxy((Class<I>) targetInterface, proxyClassLoader);
+        targetImplementation =  GenericProxyFactory.getProxy((Class<I>) targetInterface, proxyClassLoader);
 
         try {
             loadSourceGetterMethods(source);
