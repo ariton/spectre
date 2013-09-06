@@ -1,6 +1,7 @@
 package de.mzsoftware.spectre;
 
 import de.mzsoftware.spectre.annotations.MapClass;
+import de.mzsoftware.spectre.annotations.TargetInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,32 +22,16 @@ public class AnnotationMapper extends AbstractMapper{
 
     @Override
     public <S, I> I map(S source) {
-
-        Annotation annotation = findMapClassAnnotation(source);
+        AnnotationIntrospector introspector= new AnnotationIntrospector(source);
+        Annotation annotation = introspector.findAnnotation(MapClass.class);
+        if(null == annotation){
+            annotation = ((TargetInterface)introspector.findAnnotation(TargetInterface.class)).value();
+        }
         log.debug("Annotation {}", annotation);
         try {
             if (null != annotation) {
                 if (annotation instanceof MapClass) {
-                    MapClass mapClass = (MapClass) annotation;
-                    Object implementationClass = mapClass.implementationClass().newInstance();
-                    if (!(implementationClass instanceof NullMarker)) {
-
-                        targetImplementation =  mapClass.implementationClass().newInstance();
-                        targetInterface = mapClass.value();
-                        log.debug("ImplementationClass given, returning \"{}\" as Type and using \"{}\" as implementation.",
-                                targetInterface,
-                                targetImplementation.getClass().getName());
-
-                    } else {
-
-                        targetImplementation = mapClass.value().newInstance();
-                        targetInterface = targetImplementation;
-                        log.debug("No ImplementationClass given, returning \"{}\" as Type.", targetInterface.getClass().getName());
-
-                    }
-                    loadSourceGetterMethods(source);
-                    loadTargetSetterMethods(targetImplementation);
-                    doMapping(source, targetImplementation);
+                    handleMapClassAnnotation(source, (MapClass) annotation);
                 }
             }
         } catch (InstantiationException e) {
@@ -61,6 +46,28 @@ public class AnnotationMapper extends AbstractMapper{
         return (I) targetImplementation;
     }
 
+    private <S> void handleMapClassAnnotation(S source, MapClass annotation) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+        MapClass mapClass = annotation;
+        Object implementationClass = mapClass.implementationClass().newInstance();
+        if (!(implementationClass instanceof NullMarker)) {
+
+            targetImplementation =  mapClass.implementationClass().newInstance();
+            targetInterface = mapClass.value();
+            log.debug("ImplementationClass given, returning \"{}\" as Type and using \"{}\" as implementation.",
+                    targetInterface,
+                    targetImplementation.getClass().getName());
+
+        } else {
+
+            targetImplementation = mapClass.value().newInstance();
+            targetInterface = targetImplementation;
+            log.debug("No ImplementationClass given, returning \"{}\" as Type.", targetInterface.getClass().getName());
+
+        }
+        loadSourceGetterMethods(source);
+        loadTargetSetterMethods(targetImplementation);
+        doMapping(source, targetImplementation);
+    }
 
 
     <S, T> void loadTargetSetterMethods(T target) throws IllegalAccessException, InstantiationException {

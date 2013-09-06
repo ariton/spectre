@@ -51,7 +51,7 @@ public class ProxyMapper extends AbstractMapper {
         }
     }
 
-    void loadTargetSetterMethods(Object target) {
+    private void loadTargetSetterMethods(Object target) {
             log.debug("Target is ProxyClass? {}", Proxy.isProxyClass(target.getClass()));
             log.debug("Target {}", target.getClass());
             log.debug("Interface {}",target.getClass().getInterfaces()[0]);

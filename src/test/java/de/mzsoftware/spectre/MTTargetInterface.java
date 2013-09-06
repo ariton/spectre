@@ -9,8 +9,10 @@ import de.mzsoftware.spectre.annotations.TargetInterface;
  * Date: 25.07.13
  * Time: 01:05
  */
-@TargetInterface
-@MapClass(value = MTInterface.class, implementationClass = MTBeanImplementingTargetInterface.class)
+@TargetInterface(
+        @MapClass(
+                value = MTTargetInterface.class,
+                implementationClass = MTBeanImplementingTargetInterface.class))
 public interface MTTargetInterface {
     String getTestString();
 
